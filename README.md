@@ -1,2 +1,2 @@
-# TuxPad-
+# TuxPad ++
 A notepad ++ for linux
