@@ -79,9 +79,14 @@ impl Formatter {
 
     /// Return the appropriate formatter for a given GtkSourceView language ID,
     /// or `None` when no preset is available.
+    ///
+    /// GtkSourceView uses `"js"` as the canonical ID for JavaScript files,
+    /// but callers may also supply the more descriptive `"javascript"` string;
+    /// both are accepted here so that the method works regardless of the source.
     pub fn for_language(language_id: &str) -> Option<Self> {
         match language_id {
             "rust" => Some(Self::rustfmt()),
+            // GtkSourceView canonical ID is "js"; "javascript" is accepted as an alias
             "js" | "javascript" | "typescript" | "css" | "html" | "json" => {
                 Some(Self::prettier())
             }

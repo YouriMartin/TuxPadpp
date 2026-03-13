@@ -161,7 +161,8 @@ impl EditorView {
         let text = self.get_text();
         // Keep the rope in sync with the saved state
         self.rope = ropey::Rope::from_str(&text);
-        std::fs::write(path, text.as_bytes())
+        // Use into_bytes() to avoid a copy – text is not needed after this point
+        std::fs::write(path, text.into_bytes())
             .map_err(|e| format!("Failed to write '{}': {}", path.display(), e))?;
         self.file_path = Some(path.to_path_buf());
         Ok(())

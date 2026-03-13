@@ -25,9 +25,6 @@ const APP_ID: &str = "com.tuxpad.TuxPad";
 // ─── Application entry point ─────────────────────────────────────────────────
 
 fn main() -> glib::ExitCode {
-    // Initialise GtkSourceView type system before any GTK objects are created
-    sourceview5::init();
-
     let app = adw::Application::new(Some(APP_ID), gio::ApplicationFlags::empty());
     app.connect_activate(build_ui);
     app.run()
@@ -36,6 +33,8 @@ fn main() -> glib::ExitCode {
 // ─── UI builder ──────────────────────────────────────────────────────────────
 
 fn build_ui(app: &adw::Application) {
+    // Initialise GtkSourceView type system (must happen after GTK is ready)
+    sourceview5::init();
     let window = build_main_window(app);
     window.present();
 }
@@ -149,10 +148,8 @@ fn build_main_window(app: &adw::Application) -> adw::ApplicationWindow {
     // Update status bar when cursor moves in the active editor
     {
         let status_bar_clone = status_bar.clone();
-        let notebook_clone = notebook.clone();
-        notebook.connect_switch_page(move |nb, _, page_num| {
+        notebook.connect_switch_page(move |nb, _page_widget, page_num| {
             connect_cursor_moved(nb, page_num, &status_bar_clone);
-            let _ = (notebook_clone.clone(), page_num); // suppress unused warning
         });
     }
 
