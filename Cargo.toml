@@ -1,0 +1,32 @@
+[package]
+name = "tuxpad"
+version = "0.1.0"
+edition = "2021"
+description = "TuxPad++ – A feature-rich text editor for Linux"
+license = "MIT"
+
+[[bin]]
+name = "tuxpad"
+path = "src/main.rs"
+
+[dependencies]
+# GTK4 GUI framework (requires GTK >= 4.14)
+gtk4 = { version = "0.9", features = ["v4_14"] }
+
+# Libadwaita for modern Linux look and feel (requires adw >= 1.5)
+libadwaita = { version = "0.7", features = ["v1_5"] }
+
+# GtkSourceView5 for syntax highlighting, line numbers, and code editing (requires sourceview >= 5.12)
+sourceview5 = { version = "0.9", features = ["v5_12"] }
+
+# Rope data structure for efficient text buffer management on large files
+ropey = "1"
+
+# Diff library for comparing text versions in the Diff view
+similar = { version = "2", features = ["text"] }
+
+# Regular expression engine for in-editor search
+regex = "1"
+
+# High-performance line-oriented grep searcher (structure ready for full integration)
+grep-searcher = "0.1"
